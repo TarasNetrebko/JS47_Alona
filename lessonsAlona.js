@@ -58,3 +58,38 @@
 // 	In other way:
 // 	For “User” show “Good evening, dear User!”
 // 	For “Admin” show “Good evening, dear Admin!
+
+// const login = prompt("Enter your Login");
+// const time = new Date().getHours();
+// if (login.trim() === "" || login === null) {
+//     alert("Canceled");
+// } else if (login.length < 4) {
+//     alert("I don't know any users having name length less than 4 symbols");
+// } else if (login !== "User" && login !== "Admin") {
+//     alert("I don’t know you");
+// } else {
+//     const password = prompt("Enter password");
+//     if (password.trim() === "" || password === null) {
+//         alert("Canceled");
+//     } else if (login === "User") {
+//         if (password !== "UserPass") {
+//             alert("Wrong password");
+//         } else {
+//             if (time > 5 && time < 20) {
+//                 alert("Good day, dear User!");
+//             } else {
+//                 alert("Good evening, dear User!");
+//             }
+//         }
+//     } else {
+//         if (password !== "RootPass") {
+//             alert("Wrong password");
+//         } else {
+//             if (time > 5 && time < 20) {
+//                 alert("Good day, dear Admin!");
+//             } else {
+//                 alert("Good evening, dear Admin!");
+//             }
+//         }
+//     }
+// }
