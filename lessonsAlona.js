@@ -294,3 +294,53 @@
 //   console.log(allUser);
 // }
 // userInfo(users);
+
+// You should create a function constructor ‘Student’ which you can call with two arguments name and email.
+// Name, email and homeworkResults fields should be hidden from user.
+// Instance of Student should provide the following methods to get or change it’s state:
+// getName(): returns student’s name.
+// getEmail(): returns student’s email.
+// addHomeworkResult(topic, success): you can call this method with 2 arguments: topic(string) and success(boolean). This method should add new element to student’s homeworkResults property.
+// const Student = function (name, email) {
+//     const homeWorkResults = [];
+//     this.getName = function () {
+//         return name;
+//     }
+//     this.getEmail = function () {
+//         return email;
+//     }
+//     this.getHomeworkResult = function () {
+//         return homeWorkResults;
+//     }
+//     this.addHomeworkResult = function (topic, success){
+//         homeWorkResults.push({ topic, success });
+//     }
+// }
+
+// class Student {
+//     #name;
+//     #email;
+//     #homeWorkResults = [];
+//     constructor(name, email) {
+//         this.#name = name;
+//         this.#email = email;
+//     }
+//     getName() {
+//         return this.#name;
+//     }
+//     getEmail() {
+//         return this.#email;
+//     }
+//     getHomeworkResult() {
+//         return this.#homeWorkResults;
+//     }
+//     addHomeworkResult(topic, success) {
+//         this.#homeWorkResults.push({ topic, success });
+//     }
+// }
+
+// const student = new Student("John", "john@mail.com");
+// console.log(student.getName());
+// student.addHomeworkResult("HTML", true);
+// console.log(student.getHomeworkResult());
+// console.log(student.getName());
