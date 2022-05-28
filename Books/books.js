@@ -38,7 +38,7 @@ const books = [
     какими инструментами ему нужно пользоваться.`,
 	},
 ];
-
+localStorage.setItem("books", JSON.stringify(books));
 const root = document.querySelector("#root");
 
 const leftSide = document.createElement("div");
@@ -73,21 +73,33 @@ const renderPreviewMarkup = (books) => {
 
 
 const renderPreview = (event) => {
+    const books = JSON.parse(localStorage.getItem("books"));
     const book = books.find(book => book.title === event.target.textContent);
     rightDiv.innerHTML = "";
     rightDiv.insertAdjacentHTML("beforeend", renderPreviewMarkup(book));
 }
 
 const deleteF = (event) => {
-    // const book = books.find(book => book.id === event.target.parentNode.id);
-    // console.log(book);
+    const books = JSON.parse(localStorage.getItem("books"));
+    const book = books.find(book => book.id === event.target.parentNode.id);
+    const newBooks = books.filter(el => el.id !== book.id);
+    localStorage.setItem("books", JSON.stringify(newBooks));
+    const bookTitle = document.querySelector(".book-disc-title");
+    if (bookTitle) {
+        if (book.title === bookTitle.textContent) {
+            rightDiv.innerHTML = "";            
+        }
+    }
+    booksList.innerHTML = "";
+    renderList();
 }
 const editF = (event) => {
+    const books = JSON.parse(localStorage.getItem("books"));
     const book = books.find(book => book.id === event.target.parentNode.id);
-    console.log(book);
 }
 
 const renderList = () => {
+    const books = JSON.parse(localStorage.getItem("books"));
     const booksArray = books.map(book => {
         const liEl = `<li id="${book.id}" class="book-item"><p class="book-title">${book.title}</p><button class="edit-btn">Edit</button><button class="delete-btn">Delete</button></li>`;
         return liEl;
@@ -98,6 +110,61 @@ const renderList = () => {
     document.querySelectorAll(".edit-btn").forEach(el => el.addEventListener("click", editF));
     document.querySelectorAll(".delete-btn").forEach(el => el.addEventListener("click", deleteF));
 }
+const bookFormMarkup = () => {
+    return `<form class="add-form" action="">
+            <label>
+                Book Title
+                <input name="title" class="input-title input" type="text">
+            </label>        
+            <label>
+                Book Author
+                <input name="author" class="input-author input" type="text">
+            </label>        
+            <label>
+                Book Img
+                <input name="img" class="input-img input" type="text">
+            </label>        
+            <label>
+                Book Discription
+                <input name="descr" class="input-discr input" type="text">
+            </label>
+            <button class="save-btn" type="button">Save</button>
+        </form>` }
+
+const addBook = () => {
+    const newBook = {
+        id: `${Date.now()}`,
+        title: "",
+        author: "",
+        img: "",
+        descr: "",
+    }
+    rightSide.innerHTML = bookFormMarkup();
+    fillObject(newBook);
+    const save = document.querySelector(".save-btn");
+    save.addEventListener("click", saveBook);
+    function saveBook() {
+        if (Object.values(newBook).some(el => el === "")) {
+            alert("PLS fill all inputs!");
+            return;
+        }
+        const books = JSON.parse(localStorage.getItem("books"));
+        books.push(newBook);
+        localStorage.setItem("books", JSON.stringify(books));
+        rightDiv.innerHTML = "";
+        rightDiv.insertAdjacentHTML("beforeend", renderPreviewMarkup(newBook));  
+        booksList.innerHTML = "";
+        renderList();
+    }
+}
+function fillObject(book) {
+    const input = document.querySelectorAll(".input");
+    input.forEach(el => el.addEventListener("change", mvoh))
+    function mvoh(e) {
+        book[e.target.name] = e.target.value;
+    }
+}
+button.addEventListener("click", addBook);
 renderList();
 
 

@@ -55,3 +55,14 @@ body {
 .book-item:not(:last-child) {
     margin-bottom: 10px;
 }
+.add-form {
+    display: flex;
+    flex-direction: column;
+}
+.input {
+    margin-top: 10px;
+}
+.save-btn {
+    width: 50px;
+    margin-top: 10px;
+}
