@@ -92,10 +92,25 @@ const deleteF = (event) => {
     }
     booksList.innerHTML = "";
     renderList();
+    setTimeout(() => alert("Book successfuly deleted!"), 500);
 }
 const editF = (event) => {
+    rightDiv.innerHTML = "";
     const books = JSON.parse(localStorage.getItem("books"));
     const book = books.find(book => book.id === event.target.parentNode.id);
+    rightSide.insertAdjacentHTML("beforeend", bookFormMarkup(book));
+    fillObject(book);
+    const save = document.querySelector(".save-btn");
+    save.addEventListener("click", saveEditedBook);
+    function saveEditedBook() {
+        const bookIndex = books.findIndex(el => el.id === event.target.parentNode.id);
+        books.splice(bookIndex, 1, book);
+        localStorage.setItem("books", JSON.stringify(books));
+        booksList2.innerHTML = "";
+        rightDiv.innerHTML = "";
+        renderList();
+        setTimeout(() => alert("Book successfuly addited!"), 500);
+    }
 }
 
 const renderList = () => {
@@ -110,23 +125,23 @@ const renderList = () => {
     document.querySelectorAll(".edit-btn").forEach(el => el.addEventListener("click", editF));
     document.querySelectorAll(".delete-btn").forEach(el => el.addEventListener("click", deleteF));
 }
-const bookFormMarkup = () => {
+const bookFormMarkup = ({title, author, img, plot}) => {
     return `<form class="add-form" action="">
             <label>
                 Book Title
-                <input name="title" class="input-title input" type="text">
+                <input value="${title}" name="title" class="input-title input" type="text">
             </label>        
             <label>
                 Book Author
-                <input name="author" class="input-author input" type="text">
+                <input value="${author}" name="author" class="input-author input" type="text">
             </label>        
             <label>
                 Book Img
-                <input name="img" class="input-img input" type="text">
+                <input value="${img}" name="img" class="input-img input" type="text">
             </label>        
             <label>
                 Book Discription
-                <input name="descr" class="input-discr input" type="text">
+                <input value="${plot}" name="plot" class="input-discr input" type="text">
             </label>
             <button class="save-btn" type="button">Save</button>
         </form>` }
@@ -137,9 +152,9 @@ const addBook = () => {
         title: "",
         author: "",
         img: "",
-        descr: "",
+        plot: "",
     }
-    rightSide.innerHTML = bookFormMarkup();
+    rightSide.innerHTML = bookFormMarkup(newBook);
     fillObject(newBook);
     const save = document.querySelector(".save-btn");
     save.addEventListener("click", saveBook);
@@ -165,6 +180,7 @@ function fillObject(book) {
     }
 }
 button.addEventListener("click", addBook);
+
 renderList();
 
 
